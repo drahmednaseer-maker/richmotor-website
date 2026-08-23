@@ -210,9 +210,9 @@ export const body = `
       <p style="margin-top:1rem">RMC supplies high-performance diesel generator sets across the UAE and MENA region, powered by globally trusted Kubota, John Deere and Cummins G-Drive engines. Our gensets deliver reliable, fuel-efficient and environmentally responsible power for industrial, commercial and emergency applications — even in harsh environmental conditions.</p>
       <p style="margin-top:1rem">All major components are individually tested before assembly. Every completed generator set then undergoes full load testing at up to 110% of rated capacity, guaranteeing operational safety and readiness before delivery. We also build for specialised and regulated applications, including Zone 2 hazardous area generators and DCC-compliant systems for oil &amp; gas, utilities and critical infrastructure.</p>
       <div class="stats" style="margin-top:2.25rem">
-        <div class="stat"><b><span data-count="19">0</span>+</b><span>Years experience</span></div>
-        <div class="stat"><b><span data-count="50">0</span>+</b><span>Countries served</span></div>
-        <div class="stat"><b><span data-count="110">0</span>%</b><span>Load tested</span></div>
+        <div class="stat"><b><span data-count="19">19</span>+</b><span>Years experience</span></div>
+        <div class="stat"><b><span data-count="50">50</span>+</b><span>Countries served</span></div>
+        <div class="stat"><b><span data-count="110">110</span>%</b><span>Load tested</span></div>
         <div class="stat"><b>24/7</b><span>Support available</span></div>
       </div>
       <div class="btn-row" style="margin-top:2rem">

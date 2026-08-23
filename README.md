@@ -69,3 +69,16 @@ The site is fully static, so the enquiry form composes a pre-filled email to
 `sales@richmotor.com` in the visitor's mail client. WhatsApp and click-to-call
 are offered alongside it. To switch to a hosted form endpoint later, change the
 `form[data-mailto]` handler in `src/app.js`.
+
+## Visual QA helper
+
+`qa.mjs` writes static snapshots of a built page shifted to a given scroll
+offset, with reveal animations and lazy loading disabled — useful for
+screenshotting below-the-fold sections in headless environments.
+
+```bash
+node build.mjs && node qa.mjs index 0 900 1750   # -> dist/__qa/index-*.html
+```
+
+Snapshots land in `dist/__qa/` and are wiped by the next build, so they never
+ship.

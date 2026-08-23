@@ -302,7 +302,7 @@ body.nav-open .drawer { opacity: 1; visibility: visible; transform: none; }
 }
 .hero__badge b {
   padding: .2rem .55rem; border-radius: var(--r-full); background: var(--brand-grad);
-  color: #fff; font-size: .68rem; font-weight: 750; letter-spacing: .08em;
+  color: #fff; font-size: .68rem; font-weight: 750; letter-spacing: .08em; white-space: nowrap;
 }
 .hero h1 {
   font-size: var(--fs-5xl); color: #fff; max-width: 17ch;
@@ -320,8 +320,8 @@ body.nav-open .drawer { opacity: 1; visibility: visible; transform: none; }
   margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: var(--sp-6);
   border-top: 1px solid rgba(255, 255, 255, .13);
 }
-.hero__stat b { display: block; font-size: clamp(1.6rem, 2.4vw, 2.25rem); font-weight: 750; color: #fff; letter-spacing: -0.03em; line-height: 1.1; }
-.hero__stat span { font-size: var(--fs-xs); font-weight: 550; letter-spacing: .1em; text-transform: uppercase; color: #8fa0b8; }
+.hero__stat > b { display: block; font-size: clamp(1.6rem, 2.4vw, 2.25rem); font-weight: 750; color: #fff; letter-spacing: -0.03em; line-height: 1.1; white-space: nowrap; }
+.hero__stat > span { font-size: var(--fs-xs); font-weight: 550; letter-spacing: .1em; text-transform: uppercase; color: #8fa0b8; }
 
 /* Page hero (inner pages) */
 .pagehero { position: relative; isolation: isolate; background: var(--dark-grad); overflow: hidden; }
@@ -338,6 +338,13 @@ body.nav-open .drawer { opacity: 1; visibility: visible; transform: none; }
 .crumbs a:hover { color: var(--cyan); }
 .crumbs span[aria-current] { color: #cfdae8; }
 .crumbs svg { width: 10px; height: 10px; opacity: .6; }
+
+/* On phones the primary CTAs go full width: bigger targets, tidier stacking. */
+@media (max-width: 560px) {
+  .hero .btn-row, .pagehero .btn-row, .cta-band .btn-row { width: 100%; }
+  .hero .btn-row .btn, .pagehero .btn-row .btn, .cta-band .btn-row .btn { width: 100%; }
+  .hero__badge { font-size: .7rem; padding-block: .4rem; }
+}
 
 /* --- Marquee ------------------------------------------------------------ */
 .marquee { background: var(--ink); border-block: 1px solid rgba(255, 255, 255, .08); padding: .85rem 0; overflow: hidden; }
@@ -455,8 +462,8 @@ body.nav-open .drawer { opacity: 1; visibility: visible; transform: none; }
   background: rgba(255, 255, 255, .96); backdrop-filter: blur(16px);
   box-shadow: var(--shadow-lg);
 }
-.badge-float b { display: block; font-size: 1.45rem; font-weight: 750; color: var(--ink); letter-spacing: -0.03em; line-height: 1.1; }
-.badge-float span { font-size: var(--fs-xs); color: var(--slate); font-weight: 550; }
+.badge-float b { display: block; font-size: 1.45rem; font-weight: 750; color: var(--ink); letter-spacing: -0.03em; line-height: 1.1; white-space: nowrap; }
+.badge-float span span { font-size: var(--fs-xs); color: var(--slate); font-weight: 550; }
 .badge-float i { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--brand-grad); color: #fff; }
 .badge-float i svg { width: 20px; height: 20px; }
 
@@ -465,26 +472,40 @@ body.nav-open .drawer { opacity: 1; visibility: visible; transform: none; }
 .ticks li { display: flex; gap: .75rem; align-items: flex-start; font-size: .95rem; color: var(--ink-600); }
 .ticks li::before {
   content: ''; flex: none; width: 21px; height: 21px; margin-top: 2px; border-radius: 50%;
-  background: var(--brand-grad) center / 11px no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 11px no-repeat;
+  /* check mark on top, brand gradient fills the disc underneath */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"),
+    var(--brand-grad);
+  background-size: 12px, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
 }
 .section--dark .ticks li { color: #b3c0d2; }
 .ticks--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: .8rem clamp(1rem, 3vw, 2.5rem); }
 
 /* --- Stats -------------------------------------------------------------- */
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 1px; background: rgba(255, 255, 255, .1); border-radius: var(--r-lg); overflow: hidden; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: rgba(255, 255, 255, .1); border-radius: var(--r-lg); overflow: hidden; }
+.stats--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 720px) { .stats--wide { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .stat { background: var(--ink-800); padding: clamp(1.5rem, 3vw, 2.25rem); text-align: center; }
-.stat b { display: block; font-size: clamp(2rem, 3.4vw, 3rem); font-weight: 750; letter-spacing: -0.04em; line-height: 1; background: linear-gradient(100deg, #7fe3ff, #2fa4ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.stat span { display: block; margin-top: .55rem; font-size: var(--fs-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #8b9ab1; }
+.stat > b { display: block; font-size: clamp(1.75rem, 2.6vw, 2.75rem); font-weight: 750; letter-spacing: -0.04em; line-height: 1.05; white-space: nowrap; background: linear-gradient(100deg, #7fe3ff, #2fa4ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stat > span { display: block; margin-top: .55rem; font-size: var(--fs-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #8b9ab1; }
 
 /* --- Partners ----------------------------------------------------------- */
-.partners { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(1.75rem, 5vw, 4.5rem); }
-.partners img {
-  height: 46px; width: auto; object-fit: contain;
-  filter: grayscale(1) contrast(.9); opacity: .55;
+/* Logo chips. The source logos are JPEGs on white, so each sits on its own
+   white cell with multiply blending — the white ground disappears cleanly. */
+.partners {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(50%, 150px), 1fr));
+  gap: 1px; background: var(--line); border: 1px solid var(--line);
+  border-radius: var(--r-lg); overflow: hidden;
+}
+.partner { display: grid; place-items: center; background: #fff; padding: 1.35rem 1.1rem; min-height: 104px; }
+.partner img {
+  max-height: 40px; max-width: min(100%, 140px); width: auto; height: auto; object-fit: contain;
+  mix-blend-mode: multiply; filter: grayscale(1); opacity: .8;
   transition: filter .35s var(--ease), opacity .35s var(--ease), transform .35s var(--ease);
 }
-.partners img:hover { filter: none; opacity: 1; transform: scale(1.05); }
+.partner:hover img { filter: none; opacity: 1; transform: scale(1.06); }
 
 /* --- Accordion ---------------------------------------------------------- */
 .accordion { border-top: 1px solid var(--line); }

@@ -97,7 +97,7 @@ export function partnersSection(dark = false) {
       <h2 class="h-2">Built on world-class engine &amp; control platforms</h2>
     </div>
     <div class="partners" data-reveal>
-      ${partners.map((p) => `<img src="/img/${p.img}-${p.w}w.webp" alt="${p.name}" width="${p.w}" height="${p.h}" loading="lazy" decoding="async">`).join('\n      ')}
+      ${partners.map((p) => `<div class="partner"><img src="/img/${p.img}.webp" alt="${p.name}" width="${p.w}" height="${p.h}" loading="lazy" decoding="async"></div>`).join('\n      ')}
     </div>
   </div>
 </section>`;

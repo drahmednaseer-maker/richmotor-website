@@ -48,11 +48,13 @@ export const nav = [
   }
 ];
 
+/* Logos are auto-trimmed of their white padding and normalised to 120px tall,
+   so widths differ. The strip caps both dimensions for even optical weight. */
 export const partners = [
-  { name: 'Cummins', img: 'partner-cummins', w: 300, h: 130 },
-  { name: 'Kubota', img: 'partner-kubota', w: 300, h: 130 },
-  { name: 'John Deere', img: 'partner-johndeere', w: 300, h: 130 },
-  { name: 'Leroy-Somer', img: 'partner-leroysomer', w: 300, h: 130 },
-  { name: 'Genpac', img: 'partner-genpac', w: 300, h: 130 },
-  { name: 'Deep Sea Electronics', img: 'partner-dse', w: 450, h: 150 }
+  { name: 'Cummins', img: 'partner-cummins', w: 188, h: 120 },
+  { name: 'Kubota', img: 'partner-kubota', w: 477, h: 120 },
+  { name: 'John Deere', img: 'partner-johndeere', w: 274, h: 120 },
+  { name: 'Leroy-Somer', img: 'partner-leroysomer', w: 269, h: 120 },
+  { name: 'Genpac', img: 'partner-genpac', w: 225, h: 120 },
+  { name: 'Deep Sea Electronics', img: 'partner-dse', w: 120, h: 120 }
 ];

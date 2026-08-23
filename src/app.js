@@ -88,26 +88,32 @@
       }, 400);
     });
 
+    /* Counters. The final value is already in the HTML, so it is correct with
+       JS disabled and in background tabs where rAF is throttled. We only ever
+       count up from zero when the tab is actually visible. */
     var co = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
-        var el = en.target, to = parseFloat(el.dataset.count) || 0, t0 = null, dur = 1500;
+        var el = en.target, to = parseFloat(el.dataset.count) || 0;
         co.unobserve(el);
-        if (reduce) { el.textContent = to.toLocaleString(); return; }
+        if (reduce || d.visibilityState !== 'visible') return;
+        var t0 = null, dur = 1500;
         var step = function (ts) {
           if (!t0) t0 = ts;
           var p = Math.min((ts - t0) / dur, 1);
           var e = 1 - Math.pow(1 - p, 3);
           el.textContent = Math.round(to * e).toLocaleString();
-          if (p < 1) requestAnimationFrame(step);
+          if (p < 1 && d.visibilityState === 'visible') requestAnimationFrame(step);
+          else el.textContent = to.toLocaleString();
         };
+        el.textContent = '0';
         requestAnimationFrame(step);
       });
     }, { threshold: 0.4 });
     d.querySelectorAll('[data-count]').forEach(function (el) { co.observe(el); });
   } else {
     d.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
-    d.querySelectorAll('[data-count]').forEach(function (el) { el.textContent = el.dataset.count; });
+    /* no IntersectionObserver: HTML already holds the final values */
   }
 
   /* Mobile action bar reveal */

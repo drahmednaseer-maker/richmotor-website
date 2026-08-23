@@ -10,13 +10,14 @@ const OUT = path.join(root, 'dist');
 
 /* ---- tiny CSS minifier (safe subset) ---- */
 function minifyCss(css) {
-  // Conservative: strip comments, collapse whitespace, tidy around block/decl
-  // delimiters only. Never touches `+`/`-`/`*`/`/` so calc() and clamp() survive.
+  // Conservative on purpose: strip comments and collapse whitespace, then tidy
+  // ONLY around block/statement delimiters. Whitespace after `)` is significant
+  // in shorthands like `background: var(--g) center / 11px no-repeat`, and
+  // around `+`/`-` inside calc()/clamp(), so none of that is touched.
   return css
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\s+/g, ' ')
-    .replace(/\s*([{}();,])\s*/g, '$1')
-    .replace(/([^\s(])\s*:\s*/g, '$1:')
+    .replace(/\s*([{};])\s*/g, '$1')
     .replace(/;}/g, '}')
     .trim();
 }
