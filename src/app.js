@@ -1,0 +1,149 @@
+(function () {
+  'use strict';
+  var d = document, b = d.body;
+
+  /* Sticky header shadow */
+  var header = d.querySelector('.site-header');
+  if (header) {
+    var stuck = false;
+    var onScroll = function () {
+      var s = window.scrollY > 8;
+      if (s !== stuck) { stuck = s; header.classList.toggle('is-stuck', s); }
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* Mobile drawer */
+  var burger = d.querySelector('.burger');
+  if (burger) {
+    burger.addEventListener('click', function () {
+      var open = b.classList.toggle('nav-open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    d.querySelectorAll('.drawer a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        b.classList.remove('nav-open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+    addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && b.classList.contains('nav-open')) {
+        b.classList.remove('nav-open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.focus();
+      }
+    });
+  }
+
+  /* Drawer sub-menus */
+  d.querySelectorAll('.drawer__toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      var panel = d.getElementById(btn.getAttribute('aria-controls'));
+      if (panel) panel.classList.toggle('is-open', !open);
+    });
+  });
+
+  /* Accordion */
+  d.querySelectorAll('.acc-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      var panel = d.getElementById(btn.getAttribute('aria-controls'));
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (panel) panel.classList.toggle('is-open', !open);
+    });
+  });
+
+  /* Hero slideshow */
+  var slides = d.querySelectorAll('.hero__bg img');
+  if (slides.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var i = 0;
+    setInterval(function () {
+      slides[i].classList.remove('is-active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('is-active');
+    }, 6000);
+  }
+
+  /* Scroll reveal + counters */
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('is-in');
+        io.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    d.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+    /* Safety net: never leave content invisible if observations stall. */
+    addEventListener('load', function () {
+      setTimeout(function () {
+        d.querySelectorAll('[data-reveal]:not(.is-in)').forEach(function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.top < innerHeight * 1.1) el.classList.add('is-in');
+        });
+      }, 400);
+    });
+
+    var co = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target, to = parseFloat(el.dataset.count) || 0, t0 = null, dur = 1500;
+        co.unobserve(el);
+        if (reduce) { el.textContent = to.toLocaleString(); return; }
+        var step = function (ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min((ts - t0) / dur, 1);
+          var e = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(to * e).toLocaleString();
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.4 });
+    d.querySelectorAll('[data-count]').forEach(function (el) { co.observe(el); });
+  } else {
+    d.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
+    d.querySelectorAll('[data-count]').forEach(function (el) { el.textContent = el.dataset.count; });
+  }
+
+  /* Mobile action bar reveal */
+  var bar = d.querySelector('.actionbar');
+  if (bar) {
+    var last = 0;
+    addEventListener('scroll', function () {
+      var y = window.scrollY;
+      bar.classList.toggle('is-visible', y > 260 && y < last + 4);
+      last = y;
+    }, { passive: true });
+  }
+
+  /* Contact form -> pre-composed email (no backend, always works) */
+  d.querySelectorAll('form[data-mailto]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = new FormData(form);
+      var name = ((f.get('first') || '') + ' ' + (f.get('last') || '')).trim();
+      var lines = [
+        'Name: ' + name,
+        'Email: ' + (f.get('email') || ''),
+        'Phone: ' + (f.get('phone') || ''),
+        f.get('subject') ? 'Enquiry: ' + f.get('subject') : '',
+        '',
+        (f.get('message') || '')
+      ].filter(Boolean);
+      var subject = 'Website enquiry' + (name ? ' from ' + name : '');
+      location.href = 'mailto:' + form.dataset.mailto +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(lines.join('\n'));
+      var note = form.querySelector('.form__status');
+      if (note) note.textContent = 'Opening your email app… If nothing happens, write to sales@richmotor.com or message us on WhatsApp.';
+    });
+  });
+
+  /* Current year */
+  d.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+})();
