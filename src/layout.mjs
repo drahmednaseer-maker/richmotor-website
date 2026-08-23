@@ -142,7 +142,7 @@ export function contactSection() {
           </div>
           <div class="field"><label for="f-message">Message</label><textarea id="f-message" name="message" placeholder="Capacity required (kVA), application, site location, timeline…"></textarea></div>
           <button class="btn btn--primary btn--block" type="submit">Send message${icon.arrow}</button>
-          <p class="form__note form__status">Your message opens in your email app addressed to ${site.email}. Prefer instant? <a href="${site.whatsapp}" target="_blank" rel="noopener" style="color:var(--cyan)">Message us on WhatsApp</a>.</p>
+          <p class="form__note form__status">Your message opens in your email app addressed to ${site.email}. Prefer instant? <a href="${site.whatsapp}" target="_blank" rel="noopener" >Message us on WhatsApp</a>.</p>
         </form>
       </div>
     </div>
@@ -238,7 +238,7 @@ export function layout({ path, title, description, body, css, preload = [], sche
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
-<meta name="theme-color" content="#070b12">
+<meta name="theme-color" content="#05070b">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Rich Motor Company">
@@ -254,6 +254,7 @@ export function layout({ path, title, description, body, css, preload = [], sche
 <link rel="icon" href="/img/favicon.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/img/logo.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/mono-latin.woff2" crossorigin>
 ${preloads}
 <style>${css}</style>
 ${jsonld}

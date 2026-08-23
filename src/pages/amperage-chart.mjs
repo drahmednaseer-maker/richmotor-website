@@ -35,7 +35,7 @@ ${pageHero({
         <caption class="sr-only">Generator amperage by kVA, kW and operating voltage</caption>
         <thead><tr>${headers.map((h) => `<th scope="col">${h}</th>`).join('')}</tr></thead>
         <tbody>
-          ${rows.map((r) => `<tr>${r.map((c, i) => (i === 0 ? `<th scope="row" style="text-align:left;position:static;background:none;color:var(--ink);text-transform:none;letter-spacing:0;font-size:.875rem;padding:.7rem .75rem;border-top:1px solid var(--line-soft)">${c}</th>` : `<td>${c || '&mdash;'}</td>`)).join('')}</tr>`).join('\n          ')}
+          ${rows.map((r) => `<tr>${r.map((c, i) => (i === 0 ? `<th scope="row">${c}</th>` : `<td>${c || '&mdash;'}</td>`)).join('')}</tr>`).join('\n          ')}
         </tbody>
       </table>
     </div>

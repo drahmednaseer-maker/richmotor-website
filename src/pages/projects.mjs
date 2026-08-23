@@ -40,8 +40,8 @@ ${pageHero({
 
 <section class="section section--tight">
   <div class="container">
-    <div class="stats stats--wide" style="background:var(--line)">
-      ${[['15+', 'Flagship installations'], ['1500 kVA', 'Largest synchronised set'], ['6', 'Countries in this portfolio'], ['24/7', 'O&amp;M cover']].map(([b, s]) => `<div class="stat" style="background:#fff"><b>${b}</b><span style="color:var(--slate)">${s}</span></div>`).join('')}
+    <div class="stats stats--wide">
+      ${[['15+', 'Flagship installations'], ['1500 kVA', 'Largest synchronised set'], ['6', 'Countries in this portfolio'], ['24/7', 'O&amp;M cover']].map(([b, s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('')}
     </div>
   </div>
 </section>

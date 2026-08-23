@@ -157,7 +157,7 @@ export const body = `
       <span class="eyebrow">Who we are</span>
       <h2 class="h-1">Power providers since 2007</h2>
       <p class="lede" style="margin-top:1rem">Rich Motor Company (RMC) is a trusted provider of gensets, diesel generator power solutions and operation &amp; maintenance services across the UAE, the Middle East and Africa.</p>
-      <p style="margin-top:1rem;color:var(--slate)">We operate one of the largest modern canopy manufacturing facilities in the UAE — 20,000 square metres — producing under strict international quality control standards. Our engineers design, build, install and service power solutions with capacities of up to 2 megawatts, and our technicians work globally, however remote the site.</p>
+      <p style="margin-top:1rem">We operate one of the largest modern canopy manufacturing facilities in the UAE — 20,000 square metres — producing under strict international quality control standards. Our engineers design, build, install and service power solutions with capacities of up to 2 megawatts, and our technicians work globally, however remote the site.</p>
       <ul class="ticks ticks--2" style="margin-top:1.75rem">
         <li>In-house genset assembly &amp; canopy manufacturing</li>
         <li>Full load testing at 110% of rated capacity</li>

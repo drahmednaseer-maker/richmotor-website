@@ -106,8 +106,8 @@ ${pageHero({
       <span class="eyebrow">Applications</span>
       <h2 class="h-1">Where our gensets work</h2>
     </div>
-    <div class="specs" style="background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.1)" data-reveal>
-      ${applications.map(([t, d]) => `<div class="spec" style="background:var(--ink-800)"><dt>${t}</dt><dd style="color:#96a5ba">${d}</dd></div>`).join('')}
+    <div class="specs" data-reveal>
+      ${applications.map(([t, d]) => `<div class="spec"><dt>${t}</dt><dd>${d}</dd></div>`).join('')}
     </div>
   </div>
 </section>

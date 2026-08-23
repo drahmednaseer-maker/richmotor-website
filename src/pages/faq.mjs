@@ -87,7 +87,7 @@ ${pageHero({
 
 <section class="section">
   <div class="container" style="max-width:900px">
-    <p class="lede" data-reveal style="margin-bottom:2.5rem">At RMC, many of our customers rely upon us to provide accurate and informative answers to their electrical, engine and generator related questions. We plan to expand this section over time — if you have a question you would like to see here, <a href="/contact-us/" style="color:var(--blue);font-weight:600">email us with your suggestion</a> and we will do our best to answer and include it.</p>
+    <p class="lede" data-reveal style="margin-bottom:2.5rem">At RMC, many of our customers rely upon us to provide accurate and informative answers to their electrical, engine and generator related questions. We plan to expand this section over time — if you have a question you would like to see here, <a href="/contact-us/">email us with your suggestion</a> and we will do our best to answer and include it.</p>
 
     <div class="accordion" data-reveal>
       ${faqs.map((f, i) => `<div class="acc-item">
