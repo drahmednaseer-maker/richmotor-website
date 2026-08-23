@@ -69,28 +69,39 @@
 
   /* Scroll reveal + counters */
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if ('IntersectionObserver' in window) {
+  var reveals = [].slice.call(d.querySelectorAll('[data-reveal]'));
+
+  function revealAll() {
+    reveals.forEach(function (el) { el.classList.remove('will-reveal'); });
+  }
+
+  // Only elements that start below the fold are hidden, and only once we know
+  // the observer exists to bring them back. Everything else is already visible.
+  if (!reduce && d.visibilityState === 'visible' && 'IntersectionObserver' in window) {
+    var pending = reveals.filter(function (el) {
+      return el.getBoundingClientRect().top > innerHeight * 0.9;
+    });
+    pending.forEach(function (el) { el.classList.add('will-reveal'); });
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         en.target.classList.add('is-in');
         io.unobserve(en.target);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-    d.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
-    /* Safety net: never leave content invisible if observations stall. */
-    addEventListener('load', function () {
-      setTimeout(function () {
-        d.querySelectorAll('[data-reveal]:not(.is-in)').forEach(function (el) {
-          var r = el.getBoundingClientRect();
-          if (r.top < innerHeight * 1.1) el.classList.add('is-in');
-        });
-      }, 400);
-    });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.02 });
+    pending.forEach(function (el) { io.observe(el); });
 
-    /* Counters. The final value is already in the HTML, so it is correct with
-       JS disabled and in background tabs where rAF is throttled. We only ever
-       count up from zero when the tab is actually visible. */
+    // If the tab goes away mid-scroll the observer stops firing, so drop the
+    // animation entirely rather than risk a blank section on return.
+    d.addEventListener('visibilitychange', function () {
+      if (d.visibilityState !== 'visible') revealAll();
+    });
+  }
+
+  /* Counters. The final value already sits in the HTML, so it is correct with
+     JS off and in throttled background tabs. We only count up when visible. */
+  if ('IntersectionObserver' in window) {
     var co = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
@@ -111,9 +122,6 @@
       });
     }, { threshold: 0.4 });
     d.querySelectorAll('[data-count]').forEach(function (el) { co.observe(el); });
-  } else {
-    d.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
-    /* no IntersectionObserver: HTML already holds the final values */
   }
 
   /* Mobile action bar reveal */

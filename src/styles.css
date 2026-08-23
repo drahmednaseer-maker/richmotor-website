@@ -102,7 +102,6 @@ ul, ol { padding-left: 1.15em; }
 .section--dark { background: var(--dark-grad); color: #c6d0e0; }
 .section--dark h2, .section--dark h3, .section--dark h4 { color: #fff; }
 
-.deferred { content-visibility: auto; contain-intrinsic-size: auto 600px; }
 
 /* --- Eyebrow / headings -------------------------------------------------- */
 .eyebrow {
@@ -702,12 +701,16 @@ tbody tr:hover { background: rgba(0, 174, 239, .07); }
 
 /* --- Motion ------------------------------------------------------------- */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-/* Reveal animation only engages when JS is alive — content is never hidden otherwise. */
-.js [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.js [data-reveal].is-in { opacity: 1; transform: none; }
+/* Reveal-on-scroll. Nothing is hidden by CSS: app.js adds .will-reveal at
+   runtime, and only to elements that are below the fold when it starts. A
+   script that never runs therefore leaves the page fully readable. */
+[data-reveal] { transition: opacity .7s var(--ease), transform .7s var(--ease); }
+[data-reveal].will-reveal { opacity: 0; transform: translateY(22px); }
+[data-reveal].will-reveal.is-in { opacity: 1; transform: none; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
-  .js [data-reveal] { opacity: 1; transform: none; }
+  [data-reveal].will-reveal { opacity: 1; transform: none; }
   .hero__bg img { opacity: 1; }
   .hero__bg img:not(.is-active) { opacity: 0; }
 }

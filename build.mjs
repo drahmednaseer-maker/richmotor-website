@@ -22,14 +22,13 @@ function minifyCss(css) {
     .trim();
 }
 
-/* ---- tiny JS minifier (comments + indentation only — safe) ---- */
+/* ---- JS: shipped as authored ----
+   A previous hand-rolled minifier stripped only the first line of multi-line
+   comments and left the rest as bare statements, which broke the whole file.
+   Brotli takes this from 5 kB to ~1.6 kB anyway, so there is nothing to win by
+   rewriting the source. Leading indentation is the only thing removed. */
 function minifyJs(js) {
-  return js
-    .split('\n')
-    .map((l) => l.replace(/^\s+/, ''))
-    .filter((l) => l && !/^\/\*/.test(l) && !/^\*/.test(l) && !/^\/\//.test(l))
-    .join('\n')
-    .replace(/\/\*[\s\S]*?\*\//g, '');
+  return js.split('\n').map((l) => l.replace(/^[ \t]+/, '')).join('\n');
 }
 
 async function main() {
@@ -42,6 +41,9 @@ async function main() {
 
   /* static assets */
   await cp(path.join(root, 'public'), OUT, { recursive: true });
+  // Never ship JS that does not parse — a broken bundle silently hides every
+  // [data-reveal] section, which is exactly how this bit us once already.
+  try { new Function(js); } catch (e) { throw new Error('app.js failed to parse: ' + e.message); }
   await writeFile(path.join(OUT, 'app.js'), js);
 
   /* pages */

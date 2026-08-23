@@ -256,7 +256,6 @@ export function layout({ path, title, description, body, css, preload = [], sche
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin>
 ${preloads}
 <style>${css}</style>
-<script>document.documentElement.className='js'</script>
 ${jsonld}
 </head>
 <body>
