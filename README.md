@@ -63,6 +63,10 @@ Same 18 pages and same URLs as the original site — nothing added, nothing lost
 Vercel builds with `node build.mjs` and serves `dist/` as static files.
 `vercel.json` carries the cache and security headers.
 
+Canonical URLs, Open Graph URLs and the sitemap all use `https://richmotor.com`
+— the domain this is meant to serve. Set a `SITE_URL` environment variable in
+the Vercel project to point them somewhere else while testing.
+
 ## Contact form
 
 The site is fully static, so the enquiry form composes a pre-filled email to

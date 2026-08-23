@@ -3,7 +3,9 @@
 export const site = {
   name: 'Rich Motor Company',
   short: 'RMC',
-  domain: 'https://richmotor.com',
+  /* Canonical/og/sitemap host. Defaults to the live domain; set SITE_URL in the
+     Vercel project to point these at a different host (e.g. a staging URL). */
+  domain: (process.env.SITE_URL || 'https://richmotor.com').replace(/\/$/, ''),
   tagline: 'Diesel generator manufacturer & power solutions provider — UAE, Middle East & Africa',
   phone1: '+971 6 526 9111',
   phone1Href: 'tel:+97165269111',
