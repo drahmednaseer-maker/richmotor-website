@@ -97,6 +97,27 @@
     d.addEventListener('visibilitychange', function () {
       if (d.visibilityState !== 'visible') revealAll();
     });
+
+    // Correctness backstop: the observer is an optimisation, this is the
+    // guarantee. Anything scrolled into view is shown even if IO misses it.
+    var ticking = false;
+    function sweep() {
+      ticking = false;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        var el = pending[i];
+        if (el.getBoundingClientRect().top < innerHeight) {
+          el.classList.add('is-in');
+          pending.splice(i, 1);
+        }
+      }
+      if (!pending.length) removeEventListener('scroll', onScrollReveal);
+    }
+    function onScrollReveal() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(sweep);
+    }
+    addEventListener('scroll', onScrollReveal, { passive: true });
   }
 
   /* Counters. The final value already sits in the HTML, so it is correct with
