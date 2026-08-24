@@ -50,7 +50,7 @@ ${pageHero({
     <div class="grid grid--3" style="margin-bottom:clamp(2.5rem,5vw,4rem)">
       ${channels.map((c, i) => `<a class="card" href="${c.h}"${c.h.startsWith('http') ? ' target="_blank" rel="noopener"' : ''} data-reveal style="transition-delay:${i * 80}ms">
         <span class="card__icon">${c.i}</span>
-        <h3 style="font-size:1.05rem">${c.v}</h3>
+        <h2 style="font-size:1.05rem">${c.v}</h2>
         <p style="margin-top:.35rem">${c.b} &middot; ${c.note}</p>
       </a>`).join('\n      ')}
     </div>

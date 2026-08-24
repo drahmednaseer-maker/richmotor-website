@@ -4,7 +4,11 @@ export const meta = {
   path: '/',
   title: 'Generator Supplier UAE | Diesel Generators for Sale — Rich Motor Company',
   description: 'Trusted diesel generator supplier in UAE. Buy Cummins, Kubota & John Deere gensets from 3kW to 3MW with O&M services across Dubai, Sharjah & Abu Dhabi.',
-  preload: ['/img/hero-1-1280w.webp']
+  preload: [{
+    href: '/img/hero-1-1280w.webp',
+    imagesrcset: '/img/hero-1-800w.webp 800w, /img/hero-1-1280w.webp 1280w, /img/hero-1-1500w.webp 1500w',
+    imagesizes: '100vw'
+  }]
 };
 
 export const schema = [

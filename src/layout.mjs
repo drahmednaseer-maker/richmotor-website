@@ -182,7 +182,7 @@ function footer() {
         </div>
       </div>
       <div>
-        <h4>Company</h4>
+        <h3>Company</h3>
         <ul>
           <li><a href="/profile/">Profile</a></li>
           <li><a href="/services/">Services</a></li>
@@ -192,15 +192,15 @@ function footer() {
         </ul>
       </div>
       <div>
-        <h4>Products</h4>
+        <h3>Products</h3>
         <ul>${products.slice(0, 6).map((p) => `<li><a href="${p.href}">${p.label}</a></li>`).join('')}</ul>
       </div>
       <div>
-        <h4>Resources</h4>
+        <h3>Resources</h3>
         <ul>${tools.map((t) => `<li><a href="${t.href}">${t.label}</a></li>`).join('')}</ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h3>Contact</h3>
         <ul>
           <li><a href="${site.phone1Href}">${site.phone1}</a></li>
           <li><a href="${site.phone2Href}">${site.phone2}</a></li>
@@ -226,7 +226,15 @@ function footer() {
 /* ---------- page shell ---------- */
 export function layout({ path, title, description, body, css, preload = [], schema = [] }) {
   const canonical = site.domain + path;
-  const preloads = preload.map((p) => `<link rel="preload" as="image" href="${p}" fetchpriority="high">`).join('\n  ');
+  // Preload the LCP image. An object entry emits a responsive preload whose
+  // imagesrcset/imagesizes mirror the <img>, so the browser preloads exactly
+  // the width it will render (e.g. the 800w hero on phones) — no wasted bytes.
+  const preloads = preload.map((p) => {
+    if (typeof p === 'string') return `<link rel="preload" as="image" href="${p}" fetchpriority="high">`;
+    const attr = [`href="${p.href}"`, p.imagesrcset && `imagesrcset="${p.imagesrcset}"`, p.imagesizes && `imagesizes="${p.imagesizes}"`]
+      .filter(Boolean).join(' ');
+    return `<link rel="preload" as="image" ${attr} fetchpriority="high">`;
+  }).join('\n  ');
   const jsonld = schema.length
     ? `<script type="application/ld+json">${JSON.stringify(schema.length === 1 ? schema[0] : schema)}</script>`
     : '';
@@ -254,7 +262,6 @@ export function layout({ path, title, description, body, css, preload = [], sche
 <link rel="icon" href="/img/favicon.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/img/logo.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="/fonts/mono-latin.woff2" crossorigin>
 ${preloads}
 <style>${css}</style>
 ${jsonld}
