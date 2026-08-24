@@ -156,7 +156,7 @@ export const body = `
   </div>
 </section>
 
-<section class="section section--mist deferred">
+<section class="section section--mist deferred" id="who-we-are">
   <div class="container split">
     <div data-reveal>
       <span class="eyebrow">Who we are</span>
@@ -174,10 +174,15 @@ export const body = `
         <a class="btn btn--ghost" href="/projects/">See our projects</a>
       </div>
     </div>
-    <div class="media-frame media-frame--wide" data-reveal>
-      ${img({ name: 'facility', widths: [900, 1374], w: 1374, h: 529, alt: 'Aerial view of the Rich Motor Company manufacturing facility in Hamriyah Free Zone, Sharjah', sizes: '(max-width: 860px) 100vw, 50vw' })}
-      <div class="badge-float"><i>${icon.factory}</i><span><b>20,000 m&sup2;</b><span>Sharjah, UAE facility</span></span></div>
-    </div>
+    <figure class="showcase" data-reveal>
+      <div class="media-frame media-frame--wide showcase__frame">
+        <span class="showcase__label"><i class="showcase__dot"></i>Hamriyah Free Zone &middot; Phase II</span>
+        ${img({ name: 'facility', widths: [900, 1374], w: 1374, h: 529, alt: 'Aerial view of the Rich Motor Company manufacturing facility in Hamriyah Free Zone, Sharjah', sizes: '(max-width: 860px) 100vw, 50vw' })}
+        <span class="showcase__scrim"></span>
+        <div class="badge-float"><i>${icon.factory}</i><span><b>20,000 m&sup2;</b><span>Sharjah, UAE facility</span></span></div>
+      </div>
+      <figcaption class="showcase__cap">${icon.pin}<span>Our Sharjah plant — one of the region&rsquo;s largest canopy manufacturing facilities, built to international quality-control standards.</span></figcaption>
+    </figure>
   </div>
 </section>
 

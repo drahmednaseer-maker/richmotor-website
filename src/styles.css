@@ -574,6 +574,37 @@ body.nav-open .drawer { opacity: 1; visibility: visible; transform: none; }
 .badge-float i { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line-2); color: var(--volt); }
 .badge-float i svg { width: 17px; height: 17px; }
 
+/* --- Facility showcase — a framed instrument plate ----------------------- */
+.showcase { display: grid; gap: var(--sp-4); margin: 0; align-self: center; }
+.showcase__frame { box-shadow: 0 26px 64px -14px rgba(0, 0, 0, .62); }
+.showcase__frame img { filter: saturate(.78) contrast(1.06) brightness(.94); }
+/* The frame's own two corners (top-left, bottom-right) sit under the label and
+   the badge — hide them and let the scrim draw the two *exposed* corners
+   (top-right, bottom-left). Each corner then does exactly one job. */
+.showcase__frame::before, .showcase__frame::after { display: none; }
+.showcase__scrim {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5, 7, 11, .28) 0%, transparent 22%, transparent 58%, rgba(5, 7, 11, .68) 100%),
+    radial-gradient(130% 90% at 100% 100%, rgba(0, 220, 255, .12), transparent 55%);
+}
+.showcase__scrim::before, .showcase__scrim::after {
+  content: ''; position: absolute; width: 18px; height: 18px; z-index: 2;
+  border-color: var(--volt); border-style: solid; border-width: 0;
+}
+.showcase__scrim::before { top: 8px; right: 8px; border-top-width: 1px; border-right-width: 1px; }
+.showcase__scrim::after { bottom: 8px; left: 8px; border-bottom-width: 1px; border-left-width: 1px; }
+.showcase__label {
+  position: absolute; top: 12px; left: 12px; z-index: 3;
+  display: inline-flex; align-items: center; gap: .55rem; padding: .42rem .72rem;
+  background: rgba(5, 7, 11, .72); border: 1px solid var(--line-2);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  font-size: .58rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim);
+}
+.showcase__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--volt); box-shadow: 0 0 9px var(--volt); flex: none; }
+.showcase__cap { display: flex; gap: .6rem; align-items: flex-start; font-size: .82rem; line-height: 1.55; color: var(--text-faint); }
+.showcase__cap svg { width: 14px; height: 14px; color: var(--volt); flex: none; margin-top: .18rem; }
+
 /* --- Tick lists ---------------------------------------------------------- */
 .ticks { list-style: none; padding: 0; display: grid; gap: .85rem; }
 .ticks li { display: flex; gap: .85rem; align-items: flex-start; font-size: .95rem; color: var(--text-dim); }
