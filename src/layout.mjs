@@ -73,6 +73,9 @@ function header(path) {
     </a>
     <ul class="nav__menu">${desktopNav(path)}</ul>
     <div class="nav__cta">
+      <button class="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light / dark theme">
+        <span class="ts-ico ts-sun">${icon.sun}</span><span class="ts-ico ts-moon">${icon.moon}</span>
+      </button>
       <a class="btn btn--primary btn--sm" href="/contact-us/">Speak with Us${icon.arrow}</a>
       <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span></span></button>
     </div>
@@ -255,6 +258,7 @@ export function layout({ path, title, description, body, css, preload = [], sche
 <link rel="alternate" hreflang="en-ae" href="${canonical}">
 <link rel="alternate" hreflang="x-default" href="${canonical}">
 <meta name="theme-color" content="#05070b">
+<script>(function(){try{var t=localStorage.getItem('theme'),d=document.documentElement;if(t==='light'||t==='dark')d.setAttribute('data-theme',t);var l=t==='light'||(!t&&matchMedia('(prefers-color-scheme: light)').matches),m=document.querySelector('meta[name="theme-color"]');if(m)m.content=l?'#f4f7fb':'#05070b';}catch(e){}})();</script>
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="geo.region" content="${site.place.regionCode}">
 <meta name="geo.placename" content="${site.place.locality}, ${site.place.countryName}">
@@ -278,7 +282,7 @@ ${preloads}
 <style>${css}</style>
 ${jsonld}
 </head>
-<body>
+<body${path === '/' ? ' class="home"' : ''}>
 <a class="skip-link" href="#main">Skip to content</a>
 ${header(path)}
 <main id="main">

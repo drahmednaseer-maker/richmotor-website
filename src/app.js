@@ -14,6 +14,21 @@
     onScroll();
   }
 
+  /* Theme toggle (light / dark). The <head> script already applied the stored
+     or system theme with no flash; this only flips and persists the choice. */
+  var themeBtn = d.querySelector('.theme-toggle');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var root = d.documentElement;
+      var cur = root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      var next = cur === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      var m = d.querySelector('meta[name="theme-color"]');
+      if (m) m.content = next === 'light' ? '#f4f7fb' : '#05070b';
+    });
+  }
+
   /* Mobile drawer */
   var burger = d.querySelector('.burger');
   if (burger) {
