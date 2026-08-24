@@ -257,8 +257,8 @@ export function layout({ path, title, description, body, css, preload = [], sche
 <link rel="canonical" href="${canonical}">
 <link rel="alternate" hreflang="en-ae" href="${canonical}">
 <link rel="alternate" hreflang="x-default" href="${canonical}">
-<meta name="theme-color" content="#05070b">
-<script>(function(){try{var t=localStorage.getItem('theme'),d=document.documentElement;if(t==='light'||t==='dark')d.setAttribute('data-theme',t);var l=t==='light'||(!t&&matchMedia('(prefers-color-scheme: light)').matches),m=document.querySelector('meta[name="theme-color"]');if(m)m.content=l?'#f4f7fb':'#05070b';}catch(e){}})();</script>
+<meta name="theme-color" content="#14110c">
+<script>(function(){try{var t=localStorage.getItem('theme'),d=document.documentElement;if(t==='light'||t==='dark')d.setAttribute('data-theme',t);var l=t==='light'||(!t&&matchMedia('(prefers-color-scheme: light)').matches),m=document.querySelector('meta[name="theme-color"]');if(m)m.content=l?'#f4efe4':'#14110c';}catch(e){}})();</script>
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="geo.region" content="${site.place.regionCode}">
 <meta name="geo.placename" content="${site.place.locality}, ${site.place.countryName}">
@@ -278,6 +278,7 @@ export function layout({ path, title, description, body, css, preload = [], sche
 <link rel="icon" href="/img/favicon.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/img/logo.png">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/oswald-latin.woff2" crossorigin>
 ${preloads}
 <style>${css}</style>
 ${jsonld}

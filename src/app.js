@@ -25,7 +25,7 @@
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) {}
       var m = d.querySelector('meta[name="theme-color"]');
-      if (m) m.content = next === 'light' ? '#f4f7fb' : '#05070b';
+      if (m) m.content = next === 'light' ? '#f4efe4' : '#14110c';
     });
   }
 
