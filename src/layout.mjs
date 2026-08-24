@@ -2,11 +2,17 @@ import { site, nav, partners } from './site.mjs';
 import { icon } from './icons.mjs';
 
 /* ---------- image helpers ---------- */
-export function img({ name, widths, alt = '', w, h, sizes = '100vw', loading = 'lazy', cls = '', fetchpriority }) {
+export function img({ name, widths, alt = '', w, h, sizes = '100vw', loading = 'lazy', cls = '', fetchpriority, avif = false }) {
   const list = [].concat(widths);
   const largest = list[list.length - 1];
-  const srcset = list.map((x) => `/img/${name}-${x}w.webp ${x}w`).join(', ');
-  return `<img src="/img/${name}-${largest}w.webp"${list.length > 1 ? ` srcset="${srcset}" sizes="${sizes}"` : ''} alt="${esc(alt)}" width="${w}" height="${h}" loading="${loading}"${loading === 'eager' ? '' : ' decoding="async"'}${fetchpriority ? ` fetchpriority="${fetchpriority}"` : ''}${cls ? ` class="${cls}"` : ''}>`;
+  const many = list.length > 1;
+  const srcset = (ext) => list.map((x) => `/img/${name}-${x}w.${ext} ${x}w`).join(', ');
+  const imgTag = `<img src="/img/${name}-${largest}w.webp"${many ? ` srcset="${srcset('webp')}" sizes="${sizes}"` : ''} alt="${esc(alt)}" width="${w}" height="${h}" loading="${loading}"${loading === 'eager' ? '' : ' decoding="async"'}${fetchpriority ? ` fetchpriority="${fetchpriority}"` : ''}${cls ? ` class="${cls}"` : ''}>`;
+  // AVIF is offered first via <picture>; browsers that lack it fall back to the
+  // webp <img>. `picture { display: contents }` keeps layout/positioning intact.
+  if (!avif) return imgTag;
+  const avifSet = many ? srcset('avif') : `/img/${name}-${largest}w.avif`;
+  return `<picture><source type="image/avif" srcset="${avifSet}"${many ? ` sizes="${sizes}"` : ''}>${imgTag}</picture>`;
 }
 
 export const esc = (s = '') =>
@@ -231,7 +237,7 @@ export function layout({ path, title, description, body, css, preload = [], sche
   // the width it will render (e.g. the 800w hero on phones) — no wasted bytes.
   const preloads = preload.map((p) => {
     if (typeof p === 'string') return `<link rel="preload" as="image" href="${p}" fetchpriority="high">`;
-    const attr = [`href="${p.href}"`, p.imagesrcset && `imagesrcset="${p.imagesrcset}"`, p.imagesizes && `imagesizes="${p.imagesizes}"`]
+    const attr = [`href="${p.href}"`, p.imagesrcset && `imagesrcset="${p.imagesrcset}"`, p.imagesizes && `imagesizes="${p.imagesizes}"`, p.type && `type="${p.type}"`]
       .filter(Boolean).join(' ');
     return `<link rel="preload" as="image" ${attr} fetchpriority="high">`;
   }).join('\n  ');

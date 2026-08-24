@@ -5,9 +5,10 @@ export const meta = {
   title: 'Generator Supplier UAE | Diesel Generators for Sale — Rich Motor Company',
   description: 'Trusted diesel generator supplier in UAE. Buy Cummins, Kubota & John Deere gensets from 3kW to 3MW with O&M services across Dubai, Sharjah & Abu Dhabi.',
   preload: [{
-    href: '/img/hero-1-1280w.webp',
-    imagesrcset: '/img/hero-1-800w.webp 800w, /img/hero-1-1280w.webp 1280w, /img/hero-1-1500w.webp 1500w',
-    imagesizes: '100vw'
+    href: '/img/hero-1-1280w.avif',
+    imagesrcset: '/img/hero-1-800w.avif 800w, /img/hero-1-1280w.avif 1280w, /img/hero-1-1500w.avif 1500w',
+    imagesizes: '100vw',
+    type: 'image/avif'
   }]
 };
 
@@ -115,8 +116,8 @@ const marqueeGroup = `<div class="marquee__group">${marqueeItems.map((t) => `<sp
 export const body = `
 <section class="hero">
   <div class="hero__bg" aria-hidden="true">
-    ${img({ name: 'hero-1', widths: [800, 1280, 1500], w: 1500, h: 1000, alt: '', loading: 'eager', fetchpriority: 'high', sizes: '100vw', cls: 'is-active' })}
-    ${img({ name: 'hero-2', widths: [800, 1280, 1500], w: 1500, h: 992, alt: '', sizes: '100vw' })}
+    ${img({ name: 'hero-1', widths: [800, 1280, 1500], w: 1500, h: 1000, alt: '', loading: 'eager', fetchpriority: 'high', sizes: '100vw', cls: 'is-active', avif: true })}
+    ${img({ name: 'hero-2', widths: [800, 1280, 1500], w: 1500, h: 992, alt: '', sizes: '100vw', avif: true })}
   </div>
   <div class="container hero__in">
     <span class="hero__badge"><b>SINCE 2007</b> UAE manufacturer &middot; 50+ countries served</span>
