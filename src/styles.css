@@ -1073,3 +1073,17 @@ tbody tr:hover { background: var(--volt-dim); }
 .numbers__item b em { font-style: normal; color: var(--accent-text); font-size: .55em; letter-spacing: 0; }
 .numbers__item > span { display: block; margin-top: .65rem; font-size: .68rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text-faint); }
 .numbers__item::before { content: ''; position: absolute; top: 0; left: 0; width: 22px; height: 2px; background: var(--volt); }
+
+
+/* --- Concrete grain ------------------------------------------------------ */
+/* A fixed, inline-SVG noise veil (no network request). `overlay` blend keeps
+   it neutral on both themes; opacity is tuned per theme. Sits above section
+   fills but below the header/action chrome, and never intercepts clicks. */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 3; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%3E%3Cfilter%20id%3D%22c%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.8%22%20numOctaves%3D%222%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22saturate%22%20values%3D%220%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23c%29%22%2F%3E%3C%2Fsvg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay; opacity: var(--noise, .5);
+}
+:root[data-theme="light"] body::after { opacity: .4; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) body::after { opacity: .4; } }
