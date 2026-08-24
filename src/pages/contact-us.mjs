@@ -1,4 +1,4 @@
-import { icon, site, img, pageHero, partnersSection, crumbSchema } from '../layout.mjs';
+import { icon, site, img, pageHero, partnersSection, crumbSchema, localBusinessSchema } from '../layout.mjs';
 
 const crumbs = [{ label: 'Contact Us' }];
 
@@ -11,23 +11,7 @@ export const meta = {
 
 export const schema = [
   crumbSchema('/contact-us/', crumbs),
-  {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'Rich Motor Company (FZE)',
-    image: site.domain + '/img/facility-1374w.webp',
-    url: site.domain + '/contact-us/',
-    telephone: site.phone1,
-    email: site.email,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Hamriyah Free Zone (Phase II)',
-      addressLocality: 'Sharjah',
-      addressCountry: 'AE'
-    },
-    areaServed: ['AE', 'SA', 'OM', 'QA', 'IQ', 'YE'],
-    sameAs: [site.social.facebook, site.social.linkedin, site.social.instagram]
-  }
+  localBusinessSchema()
 ];
 
 const channels = [

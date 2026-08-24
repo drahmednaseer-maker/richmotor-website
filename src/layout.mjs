@@ -245,22 +245,28 @@ export function layout({ path, title, description, body, css, preload = [], sche
     ? `<script type="application/ld+json">${JSON.stringify(schema.length === 1 ? schema[0] : schema)}</script>`
     : '';
   return `<!doctype html>
-<html lang="en">
+<html lang="en-AE">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
+<link rel="alternate" hreflang="en-ae" href="${canonical}">
+<link rel="alternate" hreflang="x-default" href="${canonical}">
 <meta name="theme-color" content="#05070b">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="geo.region" content="${site.place.regionCode}">
+<meta name="geo.placename" content="${site.place.locality}, ${site.place.countryName}">
+<meta name="geo.position" content="${site.place.lat};${site.place.lng}">
+<meta name="ICBM" content="${site.place.lat}, ${site.place.lng}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Rich Motor Company">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${canonical}">
 <meta property="og:image" content="${site.domain}/img/facility-1374w.webp">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="en_AE">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
@@ -311,5 +317,55 @@ export function crumbSchema(path, crumbs) {
     '@type': 'BreadcrumbList',
     itemListElement: [{ name: 'Home', item: site.domain + '/' }, ...crumbs.map((c) => ({ name: c.label, item: site.domain + (c.href || path) }))]
       .map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.item }))
+  };
+}
+
+/* ---------- local business schema (UAE) ----------
+   One canonical entity (@id) reused across pages so search engines resolve a
+   single business with its Sharjah location, service area and contact points. */
+export function localBusinessSchema() {
+  const p = site.place;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': site.domain + '/#business',
+    name: site.name,
+    alternateName: 'RMC Genset',
+    url: site.domain + '/',
+    logo: site.domain + '/img/logo.png',
+    image: site.domain + '/img/facility-1374w.webp',
+    description: site.tagline,
+    email: site.email,
+    telephone: site.phone1,
+    foundingDate: '2007',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: p.street,
+      addressLocality: p.locality,
+      addressRegion: p.region,
+      addressCountry: p.country
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: p.lat, longitude: p.lng },
+    hasMap: site.mapUrl,
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: site.hours.days,
+      opens: site.hours.opens,
+      closes: site.hours.closes
+    },
+    areaServed: [
+      { '@type': 'Country', name: p.countryName },
+      ...site.areasServed.map((a) => ({ '@type': 'City', name: a })),
+      ...['Saudi Arabia', 'Oman', 'Qatar', 'Iraq', 'Yemen', 'Africa'].map((c) => ({ '@type': 'Place', name: c }))
+    ],
+    knowsAbout: ['Diesel generators', 'Gensets', 'Power generation', 'Soundproof canopies', 'Low voltage panels', 'Operation & maintenance'],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: site.phone1,
+      contactType: 'sales',
+      areaServed: ['AE', 'Middle East', 'Africa'],
+      availableLanguage: ['English', 'Arabic']
+    },
+    sameAs: [site.social.linkedin, site.social.facebook, site.social.instagram]
   };
 }

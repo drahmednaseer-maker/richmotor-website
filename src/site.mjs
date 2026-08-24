@@ -15,6 +15,26 @@ export const site = {
   email: 'sales@richmotor.com',
   address: 'Rich Motor Company (FZE), Hamriyah Free Zone (Phase II), Sharjah — United Arab Emirates',
   addressShort: 'Hamriyah Free Zone Phase II, Sharjah, UAE',
+  /* Structured location for local SEO + schema. Coordinates are approximate to
+     Hamriyah Free Zone Phase II — replace lat/lng with the exact pin from the
+     company's Google Business Profile for best local-pack accuracy. */
+  place: {
+    street: 'Hamriyah Free Zone, Phase II',
+    locality: 'Sharjah',
+    region: 'Sharjah',        // emirate
+    regionCode: 'AE-SH',      // ISO 3166-2 for Sharjah
+    country: 'AE',
+    countryName: 'United Arab Emirates',
+    lat: 25.4715,
+    lng: 55.4890
+  },
+  mapUrl: 'https://www.google.com/maps/search/?api=1&query=25.4715%2C55.4890',
+  /* Emirates / cities targeted — used for schema areaServed */
+  areasServed: ['Dubai', 'Sharjah', 'Abu Dhabi', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain', 'Al Ain'],
+  /* Opening hours. Days come from the site copy (Sunday–Thursday); CONFIRM the
+     exact open/close times against the Google Business Profile before relying
+     on them — wrong hours in search results send customers to a closed office. */
+  hours: { days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], opens: '08:00', closes: '18:00' },
   social: {
     facebook: 'https://web.facebook.com/RICHMOTORCOMPANYFZE/',
     linkedin: 'https://www.linkedin.com/company/rich-motor-company-fze-uae/',

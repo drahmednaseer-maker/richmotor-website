@@ -1,4 +1,4 @@
-import { icon, site, img, partnersSection, contactSection } from '../layout.mjs';
+import { icon, site, img, partnersSection, contactSection, localBusinessSchema } from '../layout.mjs';
 
 export const meta = {
   path: '/',
@@ -13,25 +13,7 @@ export const meta = {
 };
 
 export const schema = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Rich Motor Company',
-    alternateName: 'RMC Genset',
-    url: site.domain,
-    logo: site.domain + '/img/logo.png',
-    description: 'Manufacturer, supplier and operator of diesel generators and power generation systems across the UAE, Middle East and Africa.',
-    email: site.email,
-    telephone: site.phone1,
-    foundingDate: '2007',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Hamriyah Free Zone (Phase II)',
-      addressLocality: 'Sharjah',
-      addressCountry: 'AE'
-    },
-    sameAs: [site.social.facebook, site.social.linkedin, site.social.instagram]
-  },
+  localBusinessSchema(),
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
