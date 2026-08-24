@@ -135,7 +135,7 @@
 }
 /* Always-dark zones — sit over photography / dark gradients in BOTH themes, so
    their text and accent stay light no matter the global theme. */
-.hero, .cta-band, .pcard__media, .projcard, .badge-float, .showcase__label {
+.hero, .cta-band, .numbers, .pcard__media, .projcard, .badge-float, .showcase__label {
   --text: #c4cede;
   --text-dim: #8b98ad;
   --text-faint: #7c899e;
@@ -984,3 +984,79 @@ tbody tr:hover { background: var(--volt-dim); }
 .skip-link:focus { top: 0; }
 .mt-0 { margin-top: 0; }
 .center { text-align: center; }
+
+/* ==========================================================================
+   Homepage — bold editorial redesign
+   ========================================================================== */
+
+/* Hero — asymmetric lead + glass instrument readout */
+.hero__grid {
+  display: grid; align-items: center; gap: clamp(2rem, 4vw, 4.5rem);
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, .92fr);
+  min-height: clamp(600px, 90svh, 900px);
+  padding-block: clamp(5rem, 9vw, 8.5rem) clamp(2.5rem, 4vw, 3.5rem);
+}
+@media (max-width: 940px) {
+  .hero__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero__panel { max-width: 480px; }
+}
+.hero__kicker {
+  display: inline-flex; align-items: center; gap: .65rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: var(--sp-5);
+}
+.hero__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--volt); box-shadow: 0 0 11px var(--volt); flex: none; animation: pulse-dot 2.4s ease-in-out infinite; }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+.hero__lead p { margin-top: var(--sp-5); max-width: 52ch; font-size: var(--fs-lg); color: var(--text-dim); }
+.hero__lead .btn-row { margin-top: var(--sp-7); }
+
+.hero__panel {
+  border: 1px solid var(--line-2); background: rgba(5, 7, 11, .5);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 30px 70px -22px rgba(0, 0, 0, .65);
+}
+.hero__panel-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .8rem 1.15rem; border-bottom: 1px solid var(--line);
+  font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: var(--text-faint);
+}
+.readout { list-style: none; margin: 0; padding: 0; }
+.readout li { padding: 1.05rem 1.2rem 1.05rem 1.5rem; border-bottom: 1px solid var(--line); position: relative; }
+.readout li:last-child { border-bottom: 0; }
+.readout li::before { content: ''; position: absolute; left: 0; top: 1.2rem; width: 3px; height: 1.2rem; background: var(--volt); box-shadow: 0 0 8px var(--volt); }
+.readout b { display: block; font-size: clamp(1.5rem, 2.3vw, 2.05rem); font-weight: 700; letter-spacing: -.03em; color: var(--white); line-height: 1.1; white-space: nowrap; }
+.readout span { display: block; margin-top: .2rem; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-faint); }
+
+/* Statement — big editorial split */
+.statement__grid { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); }
+@media (max-width: 900px) { .statement__grid { grid-template-columns: 1fr; } }
+.statement__title { font-size: clamp(2.2rem, 4.6vw, 4.1rem); letter-spacing: -.038em; line-height: 1.02; margin-block: var(--sp-4) var(--sp-5); }
+.statement__title em { font-style: normal; color: var(--accent-text); }
+
+/* Capabilities — numbered feature cards */
+.caps { display: grid; gap: 1px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); margin-top: clamp(2.25rem, 4vw, 3.25rem); }
+.caps > * { box-shadow: 0 0 0 1px var(--line); }
+.caps__item { background: var(--panel-2); padding: clamp(1.9rem, 3vw, 2.6rem); display: flex; flex-direction: column; position: relative; overflow: hidden; transition: background .3s var(--ease); }
+.caps__item::after { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 2px; background: var(--volt); box-shadow: 0 0 12px var(--volt); transition: width .4s var(--ease); }
+.caps__item:hover { background: var(--panel-3); }
+.caps__item:hover::after { width: 54px; }
+.caps__top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--sp-6); }
+.caps__icon { width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid var(--line-2); color: var(--accent-text); transition: border-color .3s, background .3s; }
+.caps__item:hover .caps__icon { border-color: var(--volt); background: var(--volt-dim); }
+.caps__icon svg { width: 24px; height: 24px; }
+.caps__num { font-size: 2.4rem; font-weight: 800; letter-spacing: -.04em; color: var(--line-2); line-height: 1; }
+.caps__item h3 { font-size: 1.2rem; margin-bottom: var(--sp-3); letter-spacing: -.02em; }
+.caps__item p { color: var(--text-dim); font-size: .95rem; flex: 1; }
+.caps__item .link-arrow { margin-top: var(--sp-5); align-self: flex-start; }
+
+/* Numbers band — oversized, dark in both themes */
+.numbers { background: #0a0e15; border-block: 1px solid var(--line-2); position: relative; overflow: hidden; }
+.numbers::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(760px 320px at 85% -25%, rgba(0, 220, 255, .12), transparent 60%), radial-gradient(620px 320px at 0% 125%, rgba(10, 132, 255, .1), transparent 60%); }
+.numbers__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; position: relative; }
+@media (min-width: 760px) { .numbers__grid { grid-template-columns: repeat(3, 1fr); } }
+.numbers__grid > * { box-shadow: 0 0 0 1px var(--line); padding: clamp(1.75rem, 3.5vw, 3rem) clamp(1.25rem, 2.5vw, 2rem); position: relative; }
+.numbers__item b { display: block; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; letter-spacing: -.045em; line-height: 1; color: var(--white); white-space: nowrap; }
+.numbers__item b em { font-style: normal; color: var(--accent-text); font-size: .55em; letter-spacing: 0; }
+.numbers__item > span { display: block; margin-top: .65rem; font-size: .68rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--text-faint); }
+.numbers__item::before { content: ''; position: absolute; top: 0; left: 0; width: 22px; height: 2px; background: var(--volt); }

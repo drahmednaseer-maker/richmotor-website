@@ -101,50 +101,36 @@ export const body = `
     ${img({ name: 'hero-1', widths: [800, 1280, 1500], w: 1500, h: 1000, alt: '', loading: 'eager', fetchpriority: 'high', sizes: '100vw', cls: 'is-active', avif: true })}
     ${img({ name: 'hero-2', widths: [800, 1280, 1500], w: 1500, h: 992, alt: '', sizes: '100vw', avif: true })}
   </div>
-  <div class="container hero__in">
-    <span class="hero__badge"><b>SINCE 2007</b> UAE manufacturer &middot; 50+ countries served</span>
-    <h1>Powering the future with <em>reliable energy</em></h1>
-    <p>Rich Motor Company designs, builds, installs and services diesel generators and O&amp;M solutions from 3&nbsp;kW to 3&nbsp;MW — across the UAE, the Middle East and Africa.</p>
-    <div class="btn-row">
-      <a class="btn btn--primary" href="/contact-us/">Request a quote${icon.arrow}</a>
-      <a class="btn btn--glass" href="/profile/">Company profile</a>
+  <div class="container hero__grid">
+    <div class="hero__lead">
+      <span class="hero__kicker"><i class="hero__dot"></i>Diesel power systems &middot; Since 2007</span>
+      <h1>Powering the future with <em>reliable energy</em></h1>
+      <p>Rich Motor Company designs, builds, installs and services diesel generators and O&amp;M solutions from 3&nbsp;kW to 3&nbsp;MW — across the UAE, the Middle East and Africa.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/contact-us/">Request a quote${icon.arrow}</a>
+        <a class="btn btn--glass" href="/profile/">Company profile</a>
+      </div>
     </div>
-    <div class="hero__stats">
-      <div class="hero__stat"><b>3 kW&ndash;3 MW</b><span>Capacity range</span></div>
-      <div class="hero__stat"><b>20,000 m&sup2;</b><span>Manufacturing facility</span></div>
-      <div class="hero__stat"><b>50+</b><span>Countries served</span></div>
-      <div class="hero__stat"><b>24/7</b><span>Call-out support</span></div>
-    </div>
+    <aside class="hero__panel" aria-label="Key facts">
+      <div class="hero__panel-head"><span>System readout</span><i class="hero__dot"></i></div>
+      <ul class="readout">
+        <li><b>3 kW&ndash;3 MW</b><span>Capacity range</span></li>
+        <li><b>20,000 m&sup2;</b><span>Manufacturing facility</span></li>
+        <li><b>50+ countries</b><span>Supplied &amp; serviced</span></li>
+        <li><b>24 / 7</b><span>Emergency call-out</span></li>
+      </ul>
+    </aside>
   </div>
 </section>
 
 <div class="marquee" aria-hidden="true"><div class="marquee__track">${marqueeGroup}${marqueeGroup}</div></div>
 
-<section class="section deferred">
-  <div class="container">
-    <div class="section-head section-head--center" data-reveal>
-      <span class="eyebrow">What we offer</span>
-      <h2 class="h-1">Comprehensive power services</h2>
-      <p class="lede">From installation to after-sale support, we deliver end-to-end power solutions tailored to your industrial needs.</p>
-    </div>
-    <div class="grid grid--3">
-      ${services.map((s, i) => `<article class="card" data-reveal style="transition-delay:${i * 80}ms">
-        <span class="card__icon">${s.icon}</span>
-        <h3>${s.title}</h3>
-        <p>${s.text}</p>
-        <a class="link-arrow" href="${s.href}">Explore service${icon.arrow}</a>
-      </article>`).join('\n      ')}
-    </div>
-  </div>
-</section>
-
-<section class="section section--mist deferred" id="who-we-are">
-  <div class="container split">
+<section class="section deferred" id="who-we-are">
+  <div class="container statement__grid">
     <div data-reveal>
       <span class="eyebrow">Who we are</span>
-      <h2 class="h-1">Power providers since 2007</h2>
-      <p class="lede" style="margin-top:1rem">Rich Motor Company (RMC) is a trusted provider of gensets, diesel generator power solutions and operation &amp; maintenance services across the UAE, the Middle East and Africa.</p>
-      <p style="margin-top:1rem">We operate one of the largest modern canopy manufacturing facilities in the UAE — 20,000 square metres — producing under strict international quality control standards. Our engineers design, build, install and service power solutions with capacities of up to 2 megawatts, and our technicians work globally, however remote the site.</p>
+      <h2 class="statement__title">We build power that <em>doesn&rsquo;t quit.</em></h2>
+      <p class="lede">Rich Motor Company (RMC) is a trusted provider of gensets, diesel generator power solutions and O&amp;M services — engineered in Sharjah and proven on sites from Dubai across the Middle East and Africa.</p>
       <ul class="ticks ticks--2" style="margin-top:1.75rem">
         <li>In-house genset assembly &amp; canopy manufacturing</li>
         <li>Full load testing at 110% of rated capacity</li>
@@ -152,7 +138,7 @@ export const body = `
         <li>Installed in 50+ countries worldwide</li>
       </ul>
       <div class="btn-row" style="margin-top:2rem">
-        <a class="btn btn--dark" href="/profile/">About RMC${icon.arrow}</a>
+        <a class="btn btn--primary" href="/profile/">About RMC${icon.arrow}</a>
         <a class="btn btn--ghost" href="/projects/">See our projects</a>
       </div>
     </div>
@@ -168,12 +154,30 @@ export const body = `
   </div>
 </section>
 
+<section class="section section--mist deferred">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">What we offer</span>
+      <h2 class="h-1">End-to-end power, backed for the long run</h2>
+      <p class="lede">From specification and in-house manufacture to installation and 24/7 after-sale support — one accountable partner for the whole lifecycle.</p>
+    </div>
+    <div class="caps">
+      ${services.map((s, i) => `<article class="caps__item" data-reveal style="transition-delay:${i * 80}ms">
+        <div class="caps__top"><span class="caps__icon">${s.icon}</span><span class="caps__num">0${i + 1}</span></div>
+        <h3>${s.title}</h3>
+        <p>${s.text}</p>
+        <a class="link-arrow" href="${s.href}">Explore service${icon.arrow}</a>
+      </article>`).join('\n      ')}
+    </div>
+  </div>
+</section>
+
 <section class="section deferred">
   <div class="container">
     <div class="section-head" data-reveal>
       <span class="eyebrow">Our products</span>
       <h2 class="h-1">Industrial power equipment</h2>
-      <p class="lede">RMC ships and installs emergency diesel generators and prime power solutions in the UAE, Saudi Arabia, Iraq, Eritrea, Sierra Leone, Burundi, Sudan, Chad, Tanzania and over 50 other countries.</p>
+      <p class="lede">Emergency diesel generators and prime power solutions — supplied and installed across the UAE, Saudi Arabia, Iraq and 50+ countries worldwide.</p>
     </div>
     <div class="grid grid--3">
       ${products.map((p, i) => `<a class="pcard" href="${p.href}" data-reveal style="transition-delay:${(i % 3) * 80}ms">
@@ -191,6 +195,23 @@ export const body = `
   </div>
 </section>
 
+<section class="numbers section deferred">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal style="margin-bottom:clamp(2rem,4vw,3.25rem)">
+      <span class="eyebrow">By the numbers</span>
+      <h2 class="h-1">Nearly two decades of Gulf-proven power</h2>
+    </div>
+    <div class="numbers__grid" data-reveal>
+      <div class="numbers__item"><b><span data-count="19">19</span>+</b><span>Years in operation</span></div>
+      <div class="numbers__item"><b>20,000<em>m&sup2;</em></b><span>Manufacturing facility</span></div>
+      <div class="numbers__item"><b><span data-count="50">50</span>+</b><span>Countries served</span></div>
+      <div class="numbers__item"><b>3&nbsp;kW&ndash;3&nbsp;MW</b><span>Capacity range</span></div>
+      <div class="numbers__item"><b><span data-count="110">110</span>%</b><span>Full load tested</span></div>
+      <div class="numbers__item"><b>24/7</b><span>Call-out support</span></div>
+    </div>
+  </div>
+</section>
+
 <section class="section section--dark deferred">
   <div class="container split split--reverse">
     <div class="media-frame media-frame--tall" data-reveal style="max-width:460px;margin-inline:auto">
@@ -201,12 +222,6 @@ export const body = `
       <h2 class="h-1">Engineered for maximum efficiency and durability</h2>
       <p style="margin-top:1rem">RMC supplies high-performance diesel generator sets across the UAE and MENA region, powered by globally trusted Kubota, John Deere and Cummins G-Drive engines. Our gensets deliver reliable, fuel-efficient and environmentally responsible power for industrial, commercial and emergency applications — even in harsh environmental conditions.</p>
       <p style="margin-top:1rem">All major components are individually tested before assembly. Every completed generator set then undergoes full load testing at up to 110% of rated capacity, guaranteeing operational safety and readiness before delivery. We also build for specialised and regulated applications, including Zone 2 hazardous area generators and DCC-compliant systems for oil &amp; gas, utilities and critical infrastructure.</p>
-      <div class="stats" style="margin-top:2.25rem">
-        <div class="stat"><b><span data-count="19">19</span>+</b><span>Years experience</span></div>
-        <div class="stat"><b><span data-count="50">50</span>+</b><span>Countries served</span></div>
-        <div class="stat"><b><span data-count="110">110</span>%</b><span>Load tested</span></div>
-        <div class="stat"><b>24/7</b><span>Support available</span></div>
-      </div>
       <div class="btn-row" style="margin-top:2rem">
         <a class="btn btn--primary" href="/diesel-generators-uae/">Explore diesel generators${icon.arrow}</a>
         <a class="btn btn--glass" href="/amperage-chart/">kVA / amperage chart</a>
