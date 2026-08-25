@@ -1,8 +1,13 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { site, nav, partners } from './site.mjs';
 import { icon } from './icons.mjs';
 
+const IMG_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'public', 'img');
+
 /* ---------- image helpers ---------- */
-export function img({ name, widths, alt = '', w, h, sizes = '100vw', loading = 'lazy', cls = '', fetchpriority, avif = false }) {
+export function img({ name, widths, alt = '', w, h, sizes = '100vw', loading = 'lazy', cls = '', fetchpriority, avif } = {}) {
   const list = [].concat(widths);
   const largest = list[list.length - 1];
   const many = list.length > 1;
@@ -10,7 +15,11 @@ export function img({ name, widths, alt = '', w, h, sizes = '100vw', loading = '
   const imgTag = `<img src="/img/${name}-${largest}w.webp"${many ? ` srcset="${srcset('webp')}" sizes="${sizes}"` : ''} alt="${esc(alt)}" width="${w}" height="${h}" loading="${loading}"${loading === 'eager' ? '' : ' decoding="async"'}${fetchpriority ? ` fetchpriority="${fetchpriority}"` : ''}${cls ? ` class="${cls}"` : ''}>`;
   // AVIF is offered first via <picture>; browsers that lack it fall back to the
   // webp <img>. `picture { display: contents }` keeps layout/positioning intact.
-  if (!avif) return imgTag;
+  // Detection is automatic at build time: the <source> is emitted only when an
+  // .avif exists on disk for EVERY width in the srcset, so a partial set can
+  // never produce a broken candidate. Pass avif:false to opt out explicitly.
+  const hasAvif = avif !== false && list.every((x) => existsSync(path.join(IMG_DIR, `${name}-${x}w.avif`)));
+  if (!hasAvif) return imgTag;
   const avifSet = many ? srcset('avif') : `/img/${name}-${largest}w.avif`;
   return `<picture><source type="image/avif" srcset="${avifSet}"${many ? ` sizes="${sizes}"` : ''}>${imgTag}</picture>`;
 }
@@ -290,6 +299,7 @@ ${header(path)}
 ${body}
 </main>
 ${footer()}
+<script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/docs/*"}}]},"eagerness":"moderate"}],"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/docs/*"}}]},"eagerness":"moderate"}]}</script>
 <script src="/app.js" defer></script>
 </body>
 </html>`;

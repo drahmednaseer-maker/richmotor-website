@@ -18,6 +18,11 @@ function minifyCss(css) {
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\s+/g, ' ')
     .replace(/\s*([{};])\s*/g, '$1')
+    // ': ' and ', ' compress safely: neither appears inside our url() data URIs
+    // (single-quoted SVG attrs contain no ': '/', ' sequences), and removing
+    // them is valid in declarations, selectors, media queries and font stacks.
+    .replace(/: /g, ':')
+    .replace(/, /g, ',')
     .replace(/;}/g, '}')
     .trim();
 }

@@ -194,6 +194,27 @@
     });
   });
 
+  /* Instant navigation fallback. Chromium prerenders via the inline
+     speculation rules; Safari/Firefox get a hover/touch prefetch so the HTML
+     is already in cache when the click lands. One-shot per URL. */
+  if (!HTMLScriptElement.supports || !HTMLScriptElement.supports('speculationrules')) {
+    var prefetched = {};
+    var warm = function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="/"]');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (prefetched[href] || href.indexOf('/docs/') === 0) return;
+      prefetched[href] = 1;
+      var l = d.createElement('link');
+      l.rel = 'prefetch';
+      l.href = href;
+      l.as = 'document';
+      d.head.appendChild(l);
+    };
+    d.addEventListener('pointerover', warm, { passive: true });
+    d.addEventListener('touchstart', warm, { passive: true });
+  }
+
   /* Current year */
   d.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();
