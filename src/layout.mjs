@@ -257,8 +257,8 @@ export function layout({ path, title, description, body, css, preload = [], sche
 <link rel="canonical" href="${canonical}">
 <link rel="alternate" hreflang="en-ae" href="${canonical}">
 <link rel="alternate" hreflang="x-default" href="${canonical}">
-<meta name="theme-color" content="#14110c">
-<script>(function(){try{var t=localStorage.getItem('theme'),d=document.documentElement;if(t==='light'||t==='dark')d.setAttribute('data-theme',t);var l=t==='light'||(!t&&matchMedia('(prefers-color-scheme: light)').matches),m=document.querySelector('meta[name="theme-color"]');if(m)m.content=l?'#f4efe4':'#14110c';}catch(e){}})();</script>
+<meta name="theme-color" content="#0a1420">
+<script>(function(){try{var t=localStorage.getItem('theme'),d=document.documentElement;if(t==='light'||t==='dark')d.setAttribute('data-theme',t);var l=t==='light'||(!t&&matchMedia('(prefers-color-scheme: light)').matches),m=document.querySelector('meta[name="theme-color"]');if(m)m.content=l?'#eef3f7':'#0a1420';}catch(e){}})();</script>
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="geo.region" content="${site.place.regionCode}">
 <meta name="geo.placename" content="${site.place.locality}, ${site.place.countryName}">
